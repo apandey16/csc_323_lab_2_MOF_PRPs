@@ -15,8 +15,8 @@ def ecb_encrypt(key, plaintext):
     return cipherText
 
 def ecb_decrypt(key, ciphertext):
-    # if len(ciphertext) % 16 != 0:
-    #     raise Exception("CT error")
+    if len(ciphertext) % 16 != 0:
+        raise Exception("CT error")
     # print("CT")
     # print(ciphertext)
 
@@ -29,7 +29,7 @@ def ecb_decrypt(key, ciphertext):
     return plainText
 
 
-print(ecb_decrypt(b'Sixteen byte key', ecb_encrypt(b'Sixteen byte key', "testtestetstetstetstetstetstets")))
+# print(ecb_decrypt(b'Sixteen byte key', ecb_encrypt(b'Sixteen byte key', "testtestetstetstetstetstetstets")))
 
 def main ():
     f = open("testDocs/Lab2.TaskII.A.txt")

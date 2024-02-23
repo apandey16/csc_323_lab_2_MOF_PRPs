@@ -43,10 +43,14 @@ def create_crypto_cookie(user, userid, role, key):
 def verify_crypto_cookie(enc_cookie, key):
 	
     iv = enc_cookie[:AES.block_size]
+    print("IV: ", iv)
     aes_obj = AES.new(bytes(key), AES.MODE_CBC, iv)
     cookie_pad = aes_obj.decrypt(enc_cookie[AES.block_size:])
     cookie = ansix923_strip(cookie_pad, AES.block_size)
+    print("Cookie: ", cookie)
+    print("Cookie: ", cookie.decode("latin-1"))
     query = urllib.parse.parse_qs(cookie.decode("latin-1"))
+    print("Query: ", query)
     
     #This will cause an exception (to be caught by caller) if one of the keys is missing.
     return query["user"][0], query["uid"][0], query["role"][0]

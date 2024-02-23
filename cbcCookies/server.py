@@ -106,6 +106,7 @@ class home:
 		
 		#Don't really need to check UID, if user and role checks out.
 		if user == "":
+			print("Role = " + role)
 			return render.home("", "", "", "Please log in.")
 		elif role == "admin":
 			msg = "Welcome, Admin!"
@@ -124,12 +125,16 @@ def create_cookie(user, uid, role):
 def verify_cookie():
     cookie = web.cookies().get(STR_COOKIE_NAME)
     if cookie == None:
-        return "","",""
+        print("No cookie")
+        return "", "", ""
     try:
-        return crypto.verify_crypto_cookie(bytes.fromhex(cookie), master_key)
+        temp = crypto.verify_crypto_cookie(bytes.fromhex(cookie), master_key)
+        print(temp)
+        return temp
     except:
-        return "","",""
+        print("Invalid cookie")
+        return "", "", ""
 
 if __name__ == "__main__":
-	app = web.application(urls, globals())
-	app.run()
+    app = web.application(urls, globals())
+    app.run()

